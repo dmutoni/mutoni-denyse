@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BeforeInsert,
+  BeforeInsert
 } from 'typeorm';
 import { IsEmail, Max, Min } from 'class-validator';
 import * as bcrypt from 'bcryptjs';
@@ -21,28 +21,28 @@ export class User {
   @ApiProperty({ example: 'Denyse' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   firstName: string;
 
   @ApiProperty({ example: 'Mutoni' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   lastName: string;
 
   @ApiProperty({ example: '+250786153667' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   phone_number: string;
 
   @ApiProperty({ example: 'mdenyse15@gmail.com' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   @IsEmail()
   email: string;
@@ -50,7 +50,7 @@ export class User {
   @ApiProperty({ example: 'Nyagatare' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   @IsEmail()
   location: string;
@@ -58,7 +58,7 @@ export class User {
   @ApiProperty({ example: 'Female' })
   @Column({
     type: 'varchar',
-    nullable: false,
+    nullable: false
   })
   @IsEmail()
   gender: string;
@@ -66,7 +66,7 @@ export class User {
   @ApiProperty({ example: '123456789123456' })
   @Column({
     type: 'bigint',
-    nullable: false,
+    nullable: false
   })
   @Min(16)
   @Max(16)
@@ -76,7 +76,7 @@ export class User {
   @Column({
     type: 'varchar',
     nullable: false,
-    select: false,
+    select: false
   })
   @Min(8)
   @Max(16)
@@ -86,7 +86,7 @@ export class User {
   @Column({
     type: 'varchar',
     nullable: true,
-    default: EMaritalStatus.SINGLE,
+    default: EMaritalStatus.SINGLE
   })
   marital_status: EMaritalStatus;
 
@@ -94,7 +94,7 @@ export class User {
   @Column({
     type: 'varchar',
     nullable: true,
-    default: EAccountStatus.ACTIVE,
+    default: EAccountStatus.ACTIVE
   })
   account_status: EAccountStatus;
 
@@ -102,14 +102,14 @@ export class User {
   @Column({
     type: 'int',
     nullable: true,
-    default: 18,
+    default: 18
   })
   age: number;
 
   @ApiProperty({ example: '14' })
   @Column('varchar', {
-    nullable: false,
-    default: EUserType.TENANT,
+    nullable: true,
+    default: EUserType.TENANT
   })
   user_type: EUserType;
 
@@ -117,9 +117,17 @@ export class User {
   @Column({
     type: 'varchar',
     nullable: true,
-    default: 18,
+    default: 18
   })
   signature: string;
+
+  @ApiProperty({ example: 'https://photos.choose' })
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default: 18
+  })
+  meterNumber: number;
 
   @CreateDateColumn() createdAt?: Date;
   @UpdateDateColumn() updatedAt?: Date;
