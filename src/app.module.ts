@@ -7,11 +7,11 @@ import { AppService } from './app.service';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
-import { ApartmentsModule } from './modules/apartments/apartments.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ResponseModule } from './utils/response/response.module';
+import { TokensModule } from './modules/tokens/tokens.module';
 
 @Module({
   imports: [
@@ -23,10 +23,10 @@ import { ResponseModule } from './utils/response/response.module';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService
     }),
-    ApartmentsModule,
     UsersModule,
     ResponseModule,
-    AuthModule
+    AuthModule,
+    TokensModule
   ],
   controllers: [AppController],
   providers: [

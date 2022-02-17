@@ -15,13 +15,12 @@ export class RolesGuard {
   canActivate(context): boolean | Promise<boolean> | Observable<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY, [
       context.getHandler(),
-      context.getClass(),
+      context.getClass()
     ]);
     if (!requiredRoles) {
       return true;
     }
     const { user } = context.switchToHttp().getRequest();
-    console.log(user);
     return requiredRoles.some((role: EUserType) => user.role.includes(role));
   }
 }

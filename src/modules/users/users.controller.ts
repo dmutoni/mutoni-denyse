@@ -17,6 +17,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { TokenDto } from './dto/token.dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -44,6 +45,11 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
+  }
+
+  @Post('/getToken')
+  getToken(@Body() userToken: TokenDto) {
+    return this.usersService.generateElectricity(userToken);
   }
 
   @Patch(':id')

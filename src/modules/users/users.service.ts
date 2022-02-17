@@ -9,6 +9,7 @@ import {
   Pagination,
   IPaginationOptions
 } from 'nestjs-typeorm-paginate';
+import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class UsersService {
@@ -41,7 +42,7 @@ export class UsersService {
     //   throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     // }
 
-    const meter_number = Math.floor(Math.random() * 100000000);
+    const meter_number = Math.floor(100000000 + Math.random() * 6000000);
 
     const user: User = await this.userRepository.create({
       firstName,
@@ -57,13 +58,14 @@ export class UsersService {
     });
     return await this.userRepository.save(user);
   }
-  async generatePower(meterNumber: number, amountOfMoney: number) {
-    const token = (Math.floor(Math.random() * 10000) + 10000)
+  async generateElectricity(userToken: TokenDto) {
+    const { amount_of_money, meter_number } = userToken;
+    const token = Math.floor(100000000 + Math.random() * 800000000)
       .toString()
       .substring(1);
 
-    if (amountOfMoney < 0 || amountOfMoney > 100) {
-      throw new Error('Amount of money must be between 0 and 100');
+    if (meter_number.toString().length !== 6) {
+      throw new Error('Meter number must be 6 numbers');
     }
     return token;
   }

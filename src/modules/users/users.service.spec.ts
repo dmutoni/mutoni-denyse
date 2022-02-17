@@ -1,3 +1,4 @@
+import { TokenDto } from './dto/token.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -8,13 +9,17 @@ describe('UserService', () => {
   let service: UsersService;
   const userRepository = {
     create: jest.fn().mockImplementation((payload) => payload),
-    save: jest.fn().mockImplementation((user) => {
+    save: jest.fn().mockImplementation(() => {
       return {
         id: 'fake-user-id',
         ...createUserDto
       };
     })
   };
+
+  const requestElectricityDto = new TokenDto();
+  requestElectricityDto.meter_number = 123467;
+  requestElectricityDto.amount_of_money = 100;
 
   const createUserDto = new CreateUserDto();
   createUserDto.firstName = 'Mutoni';
@@ -39,10 +44,15 @@ describe('UserService', () => {
     }).compile();
     service = module.get<UsersService>(UsersService);
   });
-  it('should be create a user dto', async () => {
+  it('should be create a user dto with a random 6 meter number', async () => {
     expect(await service.create(createUserDto)).toEqual({
       id: 'fake-user-id',
       ...createUserDto
     });
+  });
+  it('should generate a token with 8 numbers', async () => {
+    expect(
+      await service.generateElectricity(requestElectricityDto)
+    ).toHaveLength(8);
   });
 });
