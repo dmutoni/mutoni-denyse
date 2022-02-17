@@ -4,12 +4,12 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import * as helmet from 'helmet';
-import validationOptions from './utils/validation_options';
 import { ValidationPipe } from '@nestjs/common';
+import validationOptions from './utils/validation_options';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: true,
+    cors: true
   });
   const configService = app.get(ConfigService);
   // app.useStaticAssets(join(__dirname, '..', 'static'));

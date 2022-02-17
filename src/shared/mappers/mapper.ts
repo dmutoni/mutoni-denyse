@@ -15,7 +15,7 @@ export const toUserDto = (userData: User): CreateUserDto => {
     marital_status,
     age,
     user_type,
-    signature,
+    signature
   } = userData;
 
   const userDto: CreateUserDto = {
@@ -27,10 +27,8 @@ export const toUserDto = (userData: User): CreateUserDto => {
     location,
     gender,
     national_id,
-    marital_status,
     age,
-    user_type,
-    signature,
+    signature
   };
   return userDto;
 };

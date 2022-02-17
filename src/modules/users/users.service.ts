@@ -1,13 +1,9 @@
 import { User } from './entities/user.entity';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResponseDto } from 'src/shared/dto/response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { getRepository, Repository } from 'typeorm';
-import { toUserDto } from 'src/shared/mappers/mapper';
-import { ResponseService } from 'src/utils/response/response.service';
-import { EResponseType } from 'src/shared/enums/EResponseType';
 import {
   paginate,
   Pagination,
@@ -18,15 +14,14 @@ import {
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    private readonly responseService: ResponseService
+    private readonly userRepository: Repository<User>
   ) {}
 
   async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
     return paginate<User>(this.userRepository, options);
   }
 
-  public async create(createUserDto: CreateUserDto): Promise<ResponseDto> {
+  public async create(createUserDto: CreateUserDto): Promise<User> {
     const {
       firstName,
       lastName,
@@ -36,17 +31,18 @@ export class UsersService {
       location,
       gender,
       national_id,
-      marital_status,
-      age,
-      user_type
+      age
     } = createUserDto;
 
-    const userExists: User | false = await this.userRepository.findOne({
-      where: { email }
-    });
-    if (userExists) {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-    }
+    // const userExists: User | false = await this.userRepository.findOne({
+    //   where: { email }
+    // });
+    // if (userExists) {
+    //   throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+    // }
+
+    const meter_number = Math.floor(Math.random() * 100000000);
+
     const user: User = await this.userRepository.create({
       firstName,
       lastName,
@@ -56,20 +52,20 @@ export class UsersService {
       location,
       gender,
       national_id,
-      marital_status,
       age,
-      user_type
+      meter_number
     });
-    const result = toUserDto(user);
-    await this.userRepository.save(user);
+    return await this.userRepository.save(user);
+  }
+  async generatePower(meterNumber: number, amountOfMoney: number) {
+    const token = (Math.floor(Math.random() * 10000) + 10000)
+      .toString()
+      .substring(1);
 
-    const response: ResponseDto = this.responseService.makeResponse(
-      'User created successfully',
-      201,
-      result,
-      EResponseType.SUCCESS
-    );
-    return response;
+    if (amountOfMoney < 0 || amountOfMoney > 100) {
+      throw new Error('Amount of money must be between 0 and 100');
+    }
+    return token;
   }
 
   async findByEmail(email: string): Promise<User> {

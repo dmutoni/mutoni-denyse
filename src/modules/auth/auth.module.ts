@@ -1,6 +1,5 @@
 import { RolesGuard } from './../../guards/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { ResponseService } from 'src/utils/response/response.service';
 import { UsersService } from './../users/users.service';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -11,8 +10,9 @@ import { JwtStrategy } from 'src/strategies/jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ResponseModule } from 'src/utils/response/response.module';
 import { User } from '../users/entities/user.entity';
+import { ResponseModule } from 'src/utils/response/response.module';
+import { ResponseService } from 'src/utils/response/response.service';
 
 @Module({
   imports: [
@@ -24,10 +24,10 @@ import { User } from '../users/entities/user.entity';
       imports: [ConfigModule],
       useFactory: async () => ({
         secret: process.env.JWT_SECRET,
-        signOptions: { expiresIn: '2h' },
+        signOptions: { expiresIn: '2h' }
       }),
-      inject: [ConfigService],
-    }),
+      inject: [ConfigService]
+    })
   ],
   controllers: [AuthController],
   providers: [
@@ -37,8 +37,8 @@ import { User } from '../users/entities/user.entity';
     JwtStrategy,
     {
       provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+      useClass: RolesGuard
+    }
+  ]
 })
 export class AuthModule {}

@@ -124,10 +124,9 @@ export class User {
   @ApiProperty({ example: 'https://photos.choose' })
   @Column({
     type: 'varchar',
-    nullable: true,
-    default: 18
+    nullable: false
   })
-  meterNumber: number;
+  meter_number: number;
 
   @CreateDateColumn() createdAt?: Date;
   @UpdateDateColumn() updatedAt?: Date;

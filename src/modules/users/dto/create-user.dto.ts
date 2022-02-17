@@ -8,7 +8,7 @@ import {
   IsNumber,
   IsPhoneNumber,
   IsString,
-  IsUrl,
+  IsUrl
 } from 'class-validator';
 import { EUserType } from 'src/shared/enums/EUserType';
 
@@ -17,7 +17,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'John',
+    example: 'John'
   })
   @IsNotEmpty()
   @IsString()
@@ -25,7 +25,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'Doe',
+    example: 'Doe'
   })
   @IsString()
   @IsNotEmpty()
@@ -33,7 +33,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: '+254712345678',
+    example: '+254712345678'
   })
   @IsNotEmpty()
   @IsPhoneNumber()
@@ -41,7 +41,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'testing@gmail.com',
+    example: 'testing@gmail.com'
   })
   @IsNotEmpty()
   @IsEmail()
@@ -49,7 +49,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'nyagatare',
+    example: 'nyagatare'
   })
   @IsNotEmpty()
   @IsString()
@@ -57,7 +57,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'female',
+    example: 'female'
   })
   @IsString()
   @IsNotEmpty()
@@ -65,7 +65,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'https://example.com',
+    example: 'https://example.com'
   })
   @IsUrl()
   @IsNotEmpty()
@@ -73,7 +73,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 1234567890123456,
+    example: 1234567890123456
   })
   @IsNumber()
   @IsNotEmpty()
@@ -81,31 +81,16 @@ export class CreateUserDto {
 
   @ApiProperty({
     required: true,
-    example: 'password',
+    example: 'password'
   })
   @IsNotEmpty()
   @IsString()
   password?: string;
 
   @ApiProperty({
-    required: false,
-    example: 'single',
-  })
-  @IsEnum(EMaritalStatus)
-  @IsString()
-  marital_status: EMaritalStatus;
-
-  @ApiProperty({
     required: true,
-    example: 12,
+    example: 12
   })
   @IsNumber()
   age: number;
-
-  @ApiProperty({
-    required: false,
-    example: 'admin',
-  })
-  @IsNotEmpty()
-  user_type: EUserType;
 }

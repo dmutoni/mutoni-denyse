@@ -9,32 +9,32 @@ import databaseConfig from './config/database.config';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { ApartmentsModule } from './modules/apartments/apartments.module';
 import { UsersModule } from './modules/users/users.module';
-import { ResponseModule } from './utils/response/response.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
+import { ResponseModule } from './utils/response/response.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig, appConfig],
-      envFilePath: ['.env'],
+      envFilePath: ['.env']
     }),
     TypeOrmModule.forRootAsync({
-      useClass: TypeOrmConfigService,
+      useClass: TypeOrmConfigService
     }),
     ApartmentsModule,
     UsersModule,
     ResponseModule,
-    AuthModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
+      useClass: JwtAuthGuard
+    }
+  ]
 })
 export class AppModule {}
