@@ -17,10 +17,6 @@ describe('UserService', () => {
     })
   };
 
-  const requestElectricityDto = new TokenDto();
-  requestElectricityDto.meter_number = 123467;
-  requestElectricityDto.amount_of_money = 100;
-
   const createUserDto = new CreateUserDto();
   createUserDto.firstName = 'Mutoni';
   createUserDto.lastName = 'Denyse';
@@ -49,10 +45,5 @@ describe('UserService', () => {
       id: 'fake-user-id',
       ...createUserDto
     });
-  });
-  it('should generate a token with 8 numbers', async () => {
-    expect(
-      await service.generateElectricity(requestElectricityDto)
-    ).toHaveLength(8);
   });
 });

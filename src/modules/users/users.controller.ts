@@ -47,11 +47,6 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @Post('/getToken')
-  getToken(@Body() userToken: TokenDto) {
-    return this.usersService.generateElectricity(userToken);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
